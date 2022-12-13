@@ -328,5 +328,6 @@ def key_pressed(event):
         plt.clf()
         nx.draw_networkx(Poset,pos,labels={n: n for n in Poset},node_color="#FFFFFF",edge_color="blue",font_size=8)
 root.bind("<Key>",key_pressed)
-
+tkinter.mainloop()
 plot(Poset,'network.tex',layout=pos)
+
