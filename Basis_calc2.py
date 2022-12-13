@@ -19,6 +19,7 @@ from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
 import numpy as np
 import keyboard
+from network2tikz import plot
 
 """
 def on_move(event):
@@ -327,8 +328,5 @@ def key_pressed(event):
         plt.clf()
         nx.draw_networkx(Poset,pos,labels={n: n for n in Poset},node_color="#FFFFFF",edge_color="blue",font_size=8)
 root.bind("<Key>",key_pressed)
-if keyboard.is_pressed('b'):
-    print('b Key was pressed')
-tkinter.mainloop()
-if keyboard.is_pressed('b'):
-    print('b Key was pressed')
+
+plot(Poset,'network.tex',layout=pos)
