@@ -245,13 +245,13 @@ def Macscript(n):
     s4="d=(res I).dd"
     return s1+"\n"+s2+"\n"+s3+"\n"+s4
 n=7
-with open("script.m","w") as scr:
+with open("script.m2","w") as scr:
     with open("Outputter.txt") as Outputter:
         scr.write(Macscript(n)+"\n")
         s=Outputter.read()
         scr.write(s)
         scr.close()
-os.system('cmd /k "wsl M2 script.m')
+os.system('cmd /k "wsl M2 script.m2')
 ubundir=(os.getcwd().replace("\\","/").replace("C:","/mnt/c"))
 os.system('cmd /k "cd"')
 with open("output.json","r+") as f:
