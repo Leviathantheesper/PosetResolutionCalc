@@ -457,7 +457,7 @@ def mac2script(number):
     line3+="x"+str(number-1)+"*"+"x"+str(number)+")"
     line4="d=(res I).dd"
     return line1+"\n"+line2+"\n"+line3+"\n"+line4
-N=8
+N=7
 with open("script.m2","w") as scr:
     with open("Outputter.m2") as Outputter:
         scr.write(mac2script(N)+"\n")
@@ -489,11 +489,15 @@ for s in Vertex:
         if s!=t and contains_vars(t,s) and get_key(t,Md)[1]==get_key(s,Md)[1]-1:
             Edges.append((t,s))
 Poset=graph_from_list(Edges)
-pos = {}
+pos2 = {}
 for m in Vertex:
     ind=get_key(m,Md)
-    ind=[ind[0]-len(G[ind[1]])/2,ind[1]]
-    pos[m]=ind
+    ind=[(ind[0]-len(G[ind[1]])/2),ind[1]]
+    pos2[m]=ind
+pos={}
+scale=1
+for m in Vertex:
+    pos[m]=[scale*pos2[m][0],scale*pos2[m][1]]
 labels={}
 homd=homdeg(Poset)
 signed_matrices=to_dict_of_lists(data)
@@ -572,10 +576,16 @@ def key_pressed(event):
         plt.clf()
         nx.draw_networkx(Poset,pos,labels={n: n for n in Poset},node_color="#FFFFFF"
                          ,edge_color="blue",font_size=8)
+        plt.savefig('graph.png')
+        plt.savefig('graph.pdf')
 root.bind("<Key>",key_pressed)
 tkinter.mainloop()
 style = {}
 style['node_label'] = {m: montotex(m) for m in Poset}
 style['node_style'] = {m: "{draw=none}" for m in Poset}
 style['node_opacity'] = {m: "0" for m in Poset}
-plot(Poset,'network.tex',layout=pos,**style)
+visual_style={}
+visual_style['canvas'] = (20,20)
+plot(Poset,'network.tex',layout=pos,**style,**visual_style)
+os.system("pdflatex network.tex")
+os.system("viewer.exe")

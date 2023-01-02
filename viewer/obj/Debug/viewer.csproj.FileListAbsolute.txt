@@ -1,0 +1,14 @@
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\viewer.csproj.AssemblyReference.cache
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\viewer.csproj.SuggestedBindingRedirects.cache
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\Interop.AcroPDFLib.dll
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\AxInterop.AcroPDFLib.dll
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\viewer.csproj.ResolveComReference.cache
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\viewer.Form1.resources
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\viewer.Properties.Resources.resources
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\viewer.csproj.GenerateResource.cache
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\viewer.csproj.CoreCompileInputs.cache
+C:\Users\dcmol\PosetResolutionCalc\viewer.exe.config
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\viewer.exe
+C:\Users\dcmol\PosetResolutionCalc\viewer\obj\Debug\viewer.pdb
+C:\Users\dcmol\PosetResolutionCalc\viewer.exe
+C:\Users\dcmol\PosetResolutionCalc\viewer.pdb
