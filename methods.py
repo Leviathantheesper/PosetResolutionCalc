@@ -1,19 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Dec  4 19:35:45 2022
+Created on Wed Dec 21 01:37:16 2022
 
 @author: dcmol
 """
-import os
-import json
-import re
-import tkinter
-from tkinter import ttk,Label
-import numpy as np
-import matplotlib.pyplot as plt
-import networkx as nx
-from network2tikz import plot
 
+
+import re
+import numpy as np
+import networkx as nx
 def montotex(input_monomial):
     """
     Parameters
@@ -104,7 +99,25 @@ def equal_up_to_sign(unsigned_column,signed_column):
         if stringy not in signed_set and "-"+stringy not in signed_set:
             return False
     return True
-
+def da_vars(mon):
+    var=[]
+    variabs=re.findall(r'x\d+\*', mon)
+    for i in variabs:
+        i=i.replace("*","")
+        var.append(i)
+    reg=re.search(r'x\d+$',mon)
+    if reg:
+        var.append(reg.group(0))
+    return var
+def da_index(mon):
+    ind=[]
+    var=da_vars(mon)
+    for i in var:
+        j=i
+        j=j.replace("x","")
+        ind.append(int(j))
+    return ind
+s='x2*x3*x4*x5*x6*x7*x8*x9*x10*x11*x12'
 def contains_vars(mon1,mon2):
     """
     Parameters
@@ -120,11 +133,13 @@ def contains_vars(mon1,mon2):
         DESCRIPTION.
 
     """
-    res=re.findall("x[0-9]+",mon1)
-    for var in res:
-        if var not in mon2:
+    vars1=da_vars(mon1)
+    vars2=da_vars(mon2)
+    for var in vars1:
+        if var not in vars2:
             return False
     return True
+
 def remove_vars(mon1,mon2):
     """
     Parameters
@@ -143,7 +158,7 @@ def remove_vars(mon1,mon2):
     mon2_copy=mon2
     res=re.findall("x[0-9]+",mon1)
     for var in res:
-        mon2_copy=mon2_copy.replace(var,"")
+        mon2_copy=mon2_copy.replace(var+"","",1)
     while re.search(r"\*\*", mon2_copy):
         mon2_copy=mon2_copy.replace("**","*")
     if mon2_copy[-1]=="*":
@@ -457,125 +472,3 @@ def mac2script(number):
     line3+="x"+str(number-1)+"*"+"x"+str(number)+")"
     line4="d=(res I).dd"
     return line1+"\n"+line2+"\n"+line3+"\n"+line4
-N=8
-with open("script.m2","w") as scr:
-    with open("Outputter.m2") as Outputter:
-        scr.write(mac2script(N)+"\n")
-        outputty=Outputter.read()
-        scr.write(outputty)
-        scr.close()
-os.system('cmd /k "wsl M2 script.m2')
-ubundir=(os.getcwd().replace("\\","/").replace("C:","/mnt/c"))
-os.system('cmd /k "cd"')
-with open("output.json","r+") as f:
-    data=json.load(f)
-    f.seek(0)
-    json.dump(data,f,indent=4,sort_keys=True)
-data={}
-with open("output.json","r+") as f:
-    data=json.load(f)
-G=basis_graph(N)
-Md={}
-for f in G:
-    A=G[f]
-    Md[f]=[mltdegmon(a) for a in A]
-Vertex=[]
-for f in G:
-    for a in Md[f]:
-        Vertex.append(a)
-Edges=[]
-for s in Vertex:
-    for t in Vertex:
-        if s!=t and contains_vars(t,s) and get_key(t,Md)[1]==get_key(s,Md)[1]-1:
-            Edges.append((t,s))
-Poset=graph_from_list(Edges)
-pos = {}
-for m in Vertex:
-    ind=get_key(m,Md)
-    ind=[ind[0]-len(G[ind[1]])/2,ind[1]]
-    pos[m]=ind
-labels={}
-homd=homdeg(Poset)
-signed_matrices=to_dict_of_lists(data)
-del signed_matrices['1']
-signs={}
-Im=images(homd,Poset.nodes)
-for m in Im:
-    signs[m]={}
-for h in signed_matrices:
-    for m in Md[int(h)]:
-        for col in signed_matrices[h]:
-            if equal_up_to_sign(Im[m][1],col):
-                for index in range(len(Im[m][1])):
-                    if "-"+Im[m][1][index] in col:
-                        Poset.remove_edge(Im[m][0][index],m)
-                        Poset.add_edge(m,Im[m][0][index])
-
-root = tkinter.Tk()
-root.wm_title("Poset")
-nx.draw_networkx(Poset,pos,labels={n: n for n in Poset},node_color="#FFFFFF"
-                 ,edge_color="blue",font_size=8)
-def _quit():
-    """
-    Destroys Tkinter window.
-
-    Returns
-    -------
-    None.
-
-    """
-    root.quit()     # stops mainloop
-    root.destroy()  # this is necessary on Windows to prevent
-                    # Fatal Python Error: PyEval_RestoreThread: NULL tstate
-button = tkinter.Button(master=root, text="Quit", command=_quit)
-button.pack(side=tkinter.BOTTOM)
-textbox = ttk.Entry()
-textbox.pack(side=tkinter.LEFT)
-textbox2 = ttk.Entry()
-textbox2.pack(side=tkinter.RIGHT)
-def changesign(noddy):
-    """
-    Changes the direction of all edges incident to a given node of the Poset.
-    Parameters
-    ----------
-    noddy : string
-        Node of the Poset.
-
-    Returns
-    -------
-    None.
-
-    """
-    p_copy=Poset.copy()
-    for edge in p_copy.edges:
-        if noddy in edge:
-            Poset.remove_edge(edge[0],edge[1])
-            Poset.add_edge(edge[1],edge[0])
-def key_pressed(event):
-    """
-    Calls changesign when c is pressed.
-    Parameters
-    ----------
-    event : event
-        key press event for Tkinter window.
-
-    Returns
-    -------
-    None.
-
-    """
-    lab=Label(root,text="Key Pressed:"+event.char)
-    lab.place(x=70,y=90)
-    if event.char=="c":
-        print("Changing sign of: ",textbox.get())
-        changesign(textbox.get())
-        plt.clf()
-        nx.draw_networkx(Poset,pos,labels={n: n for n in Poset},node_color="#FFFFFF"
-                         ,edge_color="blue",font_size=8)
-root.bind("<Key>",key_pressed)
-tkinter.mainloop()
-style = {}
-style['node_label'] = {m: montotex(m) for m in Poset}
-style['node_style'] = {m: "{draw=none}" for m in Poset}
-style['node_opacity'] = {m: "0" for m in Poset}
-plot(Poset,'network.tex',layout=pos,**style)
