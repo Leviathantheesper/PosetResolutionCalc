@@ -30,8 +30,37 @@ class BettiPoset:
                     Edges.append((t,s))
         Poset=mt.graph_from_list(Edges)
         self.poset=Poset
+        self.nodes=self.poset.nodes
+        self.edges=self.poset.edges
         self.graph=G
         self.n=n
+    def levels(self):
+        nodes=self.nodes
+        edges=self.poset.edges
+        leveler={}
+        leveler[1]=[]
+        for node in nodes:
+            starter=True
+            for edge in edges:
+                if node==edge[1]:
+                    starter=False
+            if starter:
+                leveler[1].append(node)
+        level=2
+        loop=True
+        while True:
+            levelcur=[]
+            for node in leveler[level-1]:
+                preim=self.preimages(node)
+                if preim==[]:
+                    loop=False
+                    break
+                levelcur+=preim
+            if not loop:
+                break
+            leveler[level]=list(set(levelcur))
+            level+=1
+        return leveler
     def images(self,node):
         im=[]
         for edge in self.poset.edges:
@@ -115,8 +144,11 @@ class BettiPoset:
                 if done:
                     sign=-sign
         return signs
-KIRA=5
-while(True):
-    a=BettiPoset(KIRA)
-    print("Verificado para n=",KIRA,": ",a.isdisbalanced())
-    KIRA+=1
+    def resolution(self):
+        res=self.poset.copy()
+        edges=res.edges
+        for edge in self.edges:
+            if self.signs()[edge[1]][edge[0]]==-1:
+                res.remove_edge(edge[0],edge[1])
+                res.add_edge(edge[1],edge[0])
+        return res

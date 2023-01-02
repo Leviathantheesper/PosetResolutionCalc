@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from network2tikz import plot
 
+
 def montotex(input_monomial):
     """
     Parameters
@@ -589,3 +590,4 @@ visual_style['canvas'] = (20,20)
 plot(Poset,'network.tex',layout=pos,**style,**visual_style)
 os.system("pdflatex network.tex")
 os.system("viewer.exe")
+print(Md)

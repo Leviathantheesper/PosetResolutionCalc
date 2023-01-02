@@ -9,6 +9,7 @@ Created on Wed Dec 21 01:37:16 2022
 import re
 import numpy as np
 import networkx as nx
+from network2tikz import plot
 def montotex(input_monomial):
     """
     Parameters
@@ -394,7 +395,6 @@ def images(dic,free_mod_gens):
     """
     imag={}
     for mon in free_mod_gens:
-        print(free_mod_gens)
         cod=[]
         deg=[]
         if len(mon)>5:
@@ -472,3 +472,30 @@ def mac2script(number):
     line3+="x"+str(number-1)+"*"+"x"+str(number)+")"
     line4="d=(res I).dd"
     return line1+"\n"+line2+"\n"+line3+"\n"+line4
+def convert_to_path_notation(mon,n):
+    notation=""
+    ind=da_index(mon)
+    sep=separate(ind)
+    for r in range(len(sep)):
+        c=sep[r]
+        if r==0:
+            a=c[0]-1
+            notation+="."*a
+        notation+="P"+str(len(c))
+        if r<len(sep)-1:
+            last=c[-1]
+            i=ind.index(last)
+            first=ind[i+1]
+            number=first-last-1
+            notation+="."*number
+        if r==len(sep)-1:
+            a=n-c[-1]
+            notation+="."*a
+    return notation
+def path_notation(bettiposet):
+    n=bettiposet.n
+    nodes=bettiposet.poset.nodes
+    dic={}
+    for node in nodes:
+        dic[node]=convert_to_path_notation(node,n)
+    return dic

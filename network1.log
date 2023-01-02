@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.2.15)  2 JAN 2023 04:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 21.12) (preloaded format=pdflatex 2022.2.15)  2 JAN 2023 04:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./network.tex
-(network.tex
+**./network1.tex
+(network1.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2021-11-22>
 (C:\Users\dcmol\AppData\Local\Programs\MiKTeX\tex/latex/standalone\standalone.c
@@ -664,8 +664,8 @@ tex.def
 File: l3backend-pdftex.def 2021-10-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count342
 \l__pdf_internal_box=\box66
-) (network.aux)
-\openout1 = `network.aux'.
+) (network1.aux)
+\openout1 = `network1.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
 LaTeX Font Info:    ... okay on input line 3.
@@ -709,21 +709,20 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 )) [1
 
 {C:/Users/dcmol/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-(network.aux) ) 
+(network1.aux) ) 
 Here is how much of TeX's memory you used:
- 18062 strings out of 478659
- 371444 string characters out of 2845920
- 798792 words of memory out of 3000000
- 35841 multiletter control sequences out of 15000+600000
- 403884 words of font info for 29 fonts, out of 8000000 for 9000
+ 18269 strings out of 478659
+ 376358 string characters out of 2845920
+ 913180 words of memory out of 3000000
+ 36049 multiletter control sequences out of 15000+600000
+ 403430 words of font info for 27 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 115i,7n,118p,432b,1283s stack positions out of 5000i,500n,10000p,200000b,80000s
-<C:/Users/dcmol/AppData/Local/Programs/MiKTeX/fonts/type1/public
-/amsfonts/cm/cmmi7.pfb><C:/Users/dcmol/AppData/Local/Programs/MiKTeX/fonts/type
-1/public/amsfonts/cm/cmr5.pfb>
-Output written on network.pdf (1 page, 25417 bytes).
+ 115i,7n,118p,433b,1741s stack positions out of 5000i,500n,10000p,200000b,80000s
+<C:/Users/dcmol/AppData/Local/Programs/MiKTeX/fonts/type1/publi
+c/amsfonts/cm/cmr7.pfb>
+Output written on network1.pdf (1 page, 23191 bytes).
 PDF statistics:
- 19 PDF objects out of 1000 (max. 8388607)
+ 14 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
